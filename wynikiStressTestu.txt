@@ -36,3 +36,5 @@ a zostało ich wykonanych 9000 - warunek spełniony
 
 4. http.response_time.mean < 500 - warunek zakładał, że średni czas odpowiedzi nie będzie przekraczać 500ms,
 a według wyników średni czas odpowiedzi wynosił 47.1 ms - warunek spełniony
+
+Średni czas odpowiedzi serwera był niski, lecz wynika to z faktu, że każdy z użytkowników napotkał na problemy 404 oraz 405, a nie z faktycznej wydajności serwera.

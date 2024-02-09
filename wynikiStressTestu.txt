@@ -1,0 +1,38 @@
+All VUs finished. Total time: 5 minutes, 4 seconds
+
+--------------------------------
+Summary report @ 21:33:45(+0100)
+--------------------------------
+
+errors.Failed capture or match: ................................................ 4500
+http.codes.404: ................................................................ 4500
+http.codes.405: ................................................................ 4500
+http.downloaded_bytes: ......................................................... 24232500
+http.request_rate: ............................................................. 33/sec
+http.requests: ................................................................. 9000
+http.response_time:
+  min: ......................................................................... 28
+  max: ......................................................................... 426
+  mean: ........................................................................ 37.1
+  median: ...................................................................... 36.2
+  p95: ......................................................................... 45.2
+  p99: ......................................................................... 58.6
+http.responses: ................................................................ 9000
+vusers.created: ................................................................ 4500
+vusers.created_by_name.Getting a resource: ..................................... 4500
+vusers.failed: ................................................................. 4500
+
+Interpretacja wyników:
+Trzy z czterech warunków zostały spełnione:
+
+1. http.response_time.p99: 1000 - według wyników wartość p99 wyniosła 58.6, czyli znacznie mniej niż
+założone 1000ms - warunek spełniony
+
+2. vusers.failed == 0 - warunek zakładał, że żaden z użytkowników nie zakończy testu niepowodzeniem,
+lecz według wyników wszyscy użytkownicy (4500) napotkali te same problemy (404, 405) - warunek nie spełniony
+
+3. http.request_count >= 100 - warunek zakładał wykonanie co najmniej 100 żądań HTTP,
+a zostało ich wykonanych 9000 - warunek spełniony
+
+4. http.response_time.mean < 500 - warunek zakładał, że średni czas odpowiedzi nie będzie przekraczać 500ms,
+a według wyników średni czas odpowiedzi wynosił 47.1 ms - warunek spełniony

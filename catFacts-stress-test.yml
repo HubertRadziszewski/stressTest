@@ -1,7 +1,7 @@
 config:
-  target: https://alexwohlbruck.github.io/cat-facts/
+  target: https://postman-echo.com
   phases:
-    - duration: 300
+    - duration: 60
       arrivalRate: 10
       rampTo: 20
       name: "Stress Test - Ramping up to 20 users"
@@ -24,9 +24,9 @@ scenarios:
   - name: Getting a resource
     flow:
       - get:
-          url: "{{ target }}get"
+          url: "{{ target }}/get"
       - post:
-          url: "{{ target }}post"
+          url: "{{ target }}/post"
           json:
             username: "{{ keyword1 }}"
             password: "{{ keyword2 }}"

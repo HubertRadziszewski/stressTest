@@ -1,39 +1,29 @@
 config:
-  target: https://postman-echo.com
+  target: 'https://postman-echo.com'
   phases:
     - duration: 60
       arrivalRate: 10
-      rampTo: 20
-      name: "Stress Test - Ramping up to 20 users"
-  payload:
-    - path: "keywords.csv"
-      fields:
-        - "keyword1"
-        - "keyword2"
-      order: sequence
-  plugins:
-    ensure: {}
-ensure:
-  thresholds:
-    - http.response_time.p99: 1000
-  conditions:
-    - expression: "vusers.failed == 0"
-    - expression: "http.request_count >= 100"
-    - expression: "http.response_time.mean < 500"
+
+payload:
+  path: './keywords.csv'
+
 scenarios:
-  - name: Getting a resource
-    flow:
-      - get:
-          url: "{{ target }}/get"
+  - flow:
       - post:
-          url: "{{ target }}/post"
+          url: '/post'
           json:
-            username: "{{ keyword1 }}"
-            password: "{{ keyword2 }}"
-          capture:
-            - json: "$.json"
-              as: "request_body"
-            - json: "$.headers.Host"
-              as: "host"
-      - log: "Keyword1: {{ keyword1 }}"
-      - log: "Keyword2: {{ keyword2 }}"
+            key: '{{ payload }}'
+          expect:
+            - statusCode: 200
+            - responseTime:
+                max: 200
+            - p95: 
+                max: 200
+      - get:
+          url: '/get'
+          expect:
+            - statusCode: 200
+            - responseTime:
+                max: 200
+            - p95: 
+                max: 20
